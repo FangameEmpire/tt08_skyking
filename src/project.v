@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Your Name
+ * Copyright (c) 2024 Nicklaus Thompson
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -16,12 +16,48 @@ module tt_um_example (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
+    // VGA signals
+  wire hsync;
+  wire vsync;
+  wire [1:0] R;
+  wire [1:0] G;
+  wire [1:0] B;
+  wire video_active;
+  wire [9:0] pix_x;
+  wire [9:0] pix_y;
+
+  // TinyVGA PMOD
+  assign uo_out = {hsync, B[0], G[0], R[0], vsync, B[1], G[1], R[1]};
+
+  // Unused outputs assigned to 0.
   assign uio_out = 0;
   assign uio_oe  = 0;
 
-  // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  // Suppress unused signals warning
+  wire _unused_ok = &{ena, ui_in, uio_in};
+
+  reg [9:0] counter;
+
+  hvsync_generator hvsync_gen(
+    .clk(clk),
+    .reset(~rst_n),
+    .hsync(hsync),
+    .vsync(vsync),
+    .display_on(video_active),
+    .hpos(pix_x),
+    .vpos(pix_y)
+  );
+  
+  assign R = video_active ? {1'b1, ~&pix_y[8:7]} : 2'b00;
+  assign G = video_active ? ~pix_y[8:7] : 2'b00;
+  assign B = video_active ? {2{(pix_y[9:4] == 5'b11010) & (pix_x[9:4] == 5'b11100)}} : 2'b00;
+  
+  always @(posedge vsync) begin
+    if (~rst_n) begin
+      counter <= 0;
+    end else begin
+      counter <= counter + 1;
+    end
+  end
 
 endmodule
