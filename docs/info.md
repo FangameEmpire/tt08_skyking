@@ -9,12 +9,12 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+The project presents an RGB222 VGA signal to the output port.
 
 ## How to test
 
-Explain how to use your project
+Runs automaticaly.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+VGA PMOD on UO.
