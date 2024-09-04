@@ -48,9 +48,9 @@ module tt_um_NicklausThompson_SkyKing (
     .vpos(pix_y)
   );
   
-  assign R = video_active ? {1'b1, ~&pix_y[8:7]} : 2'b00;
-  assign G = video_active ? ~pix_y[8:7] : 2'b00;
-  assign B = video_active ? {2{(pix_y[9:4] == 5'b11010) & (pix_x[9:4] == 5'b11100)}} : 2'b00;
+    assign R = video_active ? {1'b1, ~&pix_y[8:7]} : 2'b00;
+    assign G = video_active ? ~pix_y[8:7] : 2'b00;
+    assign B = video_active ? {2{(pix_y[8:4] == 5'b11010) & (pix_x[8:4] == 5'b11100)}} : 2'b00;
   
   always @(posedge vsync) begin
     if (~rst_n) begin
