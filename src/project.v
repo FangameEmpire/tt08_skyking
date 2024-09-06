@@ -145,18 +145,31 @@ module skyking_generator(
 	assign do_letter[03] = (pix_y[8:4] == 5'b11010)  & (pix_x[8:3] == 6'b010100) & ~pix_x[9]
 					   | (pix_y[8:4] == 5'b11010)  & (pix_x[8:3] == 6'b010111);
 	// O
+	assign do_letter[04] = 1'b0;
 	// U
+	assign do_letter[05] = 1'b0;
 	// S
+	assign do_letter[06] = 1'b0;
 	// P
+	assign do_letter[07] = 1'b0;
 	// A
+	assign do_letter[08] = 1'b0;
 	// C
+	assign do_letter[09] = 1'b0;
 	// E
+	assign do_letter[10] = 1'b0;
 	// C
+	assign do_letter[11] = 1'b0;
 	// O
+	assign do_letter[12] = 1'b0;
 	// W
+	assign do_letter[13] = 1'b0;
 	// B
+	assign do_letter[14] = 1'b0;
 	// O
+	assign do_letter[15] = 1'b0;
 	// Y
+	assign do_letter[16] = 1'b0;
 	// Cursor
 	assign do_letter[17] = ((pix_y[8:3] == 6'b111000)  & pix_x[9] & (pix_x[8:4] == 5'b00101)
 				         |  (pix_y[8:3] == 6'b111000)  & pix_x[9] & (pix_x[8:4] == 5'b00110))
@@ -166,6 +179,9 @@ module skyking_generator(
 	assign R = video_active ? r_sky | {2{display_letter}} : 2'b00;
 	assign G = video_active ? g_sky | {2{display_letter}} : 2'b00;
 	assign B = video_active ? {2{display_letter}} : 2'b00;
+	
+	// Suppress unused signals warning
+	wire _unused_ok = &{hsync, vsync};
 
 endmodule
 
