@@ -382,10 +382,23 @@ module skyking_generator(
                            | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b010001)  & ~pix_x[9]
                            | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b010010)  & ~pix_x[9];
 
-	// VGA color channels
-	assign R = video_active ? r_sky | {2{display_letter}} : 2'b00;
-	assign G = video_active ? g_sky | {2{display_letter}} : 2'b00;
-	assign B = video_active ? {2{display_letter}} : 2'b00;
+	// Plane
+  wire do_plane;
+  assign do_plane = (pix_x >= 310) & (pix_x <= 330) & (pix_y >= 180) & (pix_y <= 300) // Fuselage
+                  | (pix_x >= 260) & (pix_x <= 380) & (pix_y >= 230) & (pix_y <= 240) // Wing main
+                  | (pix_x >= 270) & (pix_x <= 370) & (pix_y >= 240) & (pix_y <= 244) // Wing taper
+                  | (pix_x >= 290) & (pix_x <= 350) & (pix_y >= 295) & (pix_y <= 300) // Tail main
+                  | (pix_x >= 300) & (pix_x <= 340) & (pix_y >= 293) & (pix_y <= 295) // Tail taper
+                  | (pix_x >= 287) & (pix_x <= 293) & (pix_y >= 210) & (pix_y <= 255) // Engine L
+                  | (pix_x >= 347) & (pix_x <= 353) & (pix_y >= 210) & (pix_y <= 255) // Engine R
+                  | (pix_x >= 280) & (pix_x <= 300) & (pix_y >= 215) & (pix_y <= 216) // Prop L
+                  | (pix_x >= 340) & (pix_x <= 360) & (pix_y >= 215) & (pix_y <= 216) // Prop R
+                  | (pix_x >= 315) & (pix_x <= 325) & (pix_y >= 175) & (pix_y <= 180); // Nose
+
+  // VGA color channels
+  assign R = video_active ? (r_sky | {2{display_letter}}) & {2{~do_plane}} : 2'b00;
+  assign G = video_active ? (g_sky | {2{display_letter}}) & {2{~do_plane}} : 2'b00;
+  assign B = video_active ? {2{display_letter}} & {2{~do_plane}} : 2'b00;
 	
 	// Suppress unused signals warning
 	wire _unused_ok = &{hsync, vsync};
