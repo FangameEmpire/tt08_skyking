@@ -70,8 +70,8 @@ endmodule // tt_um_NicklausThompson_SkyKing
 module bnc_demo(
 	input wire clk, 
 	input wire rst_n, 
-	output wire [7:0] BNC_x,
-	output wire [6:0] BNC_y, 
+	output reg [7:0] BNC_x,
+	output reg [6:0] BNC_y, 
 	output wire BNC_trig
 );
 
@@ -84,9 +84,53 @@ module bnc_demo(
 			counter <= counter + 1;
 		end
 	end
+	
+	always @(posedge clk) begin
+		// 8-bit X output
+		case (counter[4:0])
+			0: BNC_x = 8'd12;
+			1: BNC_x = 8'd37;
+			2: BNC_x = 8'd61;
+			3: BNC_x = 8'd85;
+			4: BNC_x = 8'd109;
+			5: BNC_x = 8'd131;
+			6: BNC_x = 8'd152;
+			7: BNC_x = 8'd171;
+			8: BNC_x = 8'd189;
+			9: BNC_x = 8'd205;
+			10: BNC_x = 8'd219;
+			11: BNC_x = 8'd230;
+			12: BNC_x = 8'd240;
+			13: BNC_x = 8'd247;
+			14: BNC_x = 8'd252;
+			15: BNC_x = 8'd255;
+			default: BNC_x = 8'd00;
+		endcase
+		
+		// 7-bit Y output
+		case (counter[4:0])
+			0: BNC_y = 7'd5;
+			1: BNC_y = 7'd18;
+			2: BNC_y = 7'd30;
+			3: BNC_y = 7'd42;
+			4: BNC_y = 7'd54;
+			5: BNC_y = 7'd65;
+			6: BNC_y = 7'd75;
+			7: BNC_y = 7'd85;
+			8: BNC_y = 7'd94;
+			9: BNC_y = 7'd102;
+			10: BNC_y = 7'd109;
+			11: BNC_y = 7'd115;
+			12: BNC_y = 7'd120;
+			13: BNC_y = 7'd123;
+			14: BNC_y = 7'd126;
+			15: BNC_y = 7'd127;
+			default: BNC_x = 7'd00;
+		endcase
+	end
 
-	assign BNC_x = counter[7:0];
-	assign BNC_y = counter[14:8];
+	//assign BNC_x = raw_sine_rom[counter[4:0]];
+	//assign BNC_y = BNC_x[7:1];
 	assign BNC_trig = counter[5];
 
 endmodule
