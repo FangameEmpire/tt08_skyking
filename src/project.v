@@ -62,8 +62,34 @@ module tt_um_NicklausThompson_SkyKing (
 	// VGA image generator
 	skyking_generator vga_image_generator(clk, rst_n, hsync, vsync, video_active, pix_x, pix_y, R, G, B);
 
+	// BNC image generator
+	bnc_demo bnc_image_generator(clk, rst_n, BNC_x, BNC_y, BNC_trig);
 
 endmodule // tt_um_NicklausThompson_SkyKing
+
+module bnc_demo(
+	input wire clk, 
+	input wire rst_n, 
+	output wire [7:0] BNC_x,
+	output wire [6:0] BNC_y, 
+	output wire BNC_trig
+);
+
+	// Counter for timing
+	reg [28:0] counter;
+	always @(posedge clk) begin
+		if (~rst_n) begin
+			counter <= 0;
+		end else begin
+			counter <= counter + 1;
+		end
+	end
+
+	assign BNC_x = counter[7:0];
+	assign BNC_y = counter[14:8];
+	assign BNC_trig = counter[5];
+
+endmodule
 
 module skyking_generator(
 	input wire clk, 
@@ -79,7 +105,7 @@ module skyking_generator(
 );
 
 	// Counter for timing
-	reg [9:0] counter;
+	reg [28:0] counter;
 	always @(posedge clk) begin
 		if (~rst_n) begin
 			counter <= 0;
@@ -94,7 +120,7 @@ module skyking_generator(
 	assign g_sky = ~pix_y[8:7];
 
 	// Letters
-	wire [20:0] do_letter;
+	wire [17:0] do_letter;
 	wire display_letter = |do_letter;
 	// S
 	assign do_letter[00] = (pix_y[8:3] == 6'b110100) & (pix_x[8:5] == 4'b0000)   & ~pix_x[9]
