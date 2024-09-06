@@ -92,46 +92,78 @@ module bnc_demo(
 			BNC_y <= 7'd0;
 		end
 		
-		case (counter[3:0])
-			0: BNC_x <= 8'd150;
-			1: BNC_x <= 8'd197;
-			2: BNC_x <= 8'd232;
-			3: BNC_x <= 8'd252;
-			4: BNC_x <= 8'd252;
-			5: BNC_x <= 8'd234;
-			6: BNC_x <= 8'd199;
-			7: BNC_x <= 8'd153;
-			8: BNC_x <= 8'd103;
-			9: BNC_x <= 8'd57;
-			10: BNC_x <= 8'd21;
-			11: BNC_x <= 8'd2;
-			12: BNC_x <= 8'd2;
-			13: BNC_x <= 8'd21;
-			14: BNC_x <= 8'd56;
-			15: BNC_x <= 8'd102;
+		case (counter[4:0])
+			0: BNC_x <= 8'd186;
+			1: BNC_x <= 8'd207;
+			2: BNC_x <= 8'd225;
+			3: BNC_x <= 8'd239;
+			4: BNC_x <= 8'd249;
+			5: BNC_x <= 8'd254;
+			6: BNC_x <= 8'd254;
+			7: BNC_x <= 8'd249;
+			8: BNC_x <= 8'd240;
+			9: BNC_x <= 8'd226;
+			10: BNC_x <= 8'd209;
+			11: BNC_x <= 8'd188;
+			12: BNC_x <= 8'd165;
+			13: BNC_x <= 8'd140;
+			14: BNC_x <= 8'd115;
+			15: BNC_x <= 8'd91;
+			16: BNC_x <= 8'd68;
+			17: BNC_x <= 8'd47;
+			18: BNC_x <= 8'd29;
+			19: BNC_x <= 8'd15;
+			20: BNC_x <= 8'd5;
+			21: BNC_x <= 8'd0;
+			22: BNC_x <= 8'd0;
+			23: BNC_x <= 8'd5;
+			24: BNC_x <= 8'd14;
+			25: BNC_x <= 8'd28;
+			26: BNC_x <= 8'd46;
+			27: BNC_x <= 8'd67;
+			28: BNC_x <= 8'd90;
+			29: BNC_x <= 8'd114;
+			30: BNC_x <= 8'd139;
+			31: BNC_x <= 8'd164;
 			default: BNC_x <= 8'd0;
-		endcase
+		endcase // counter[4:0]
 		
 		// 7-bit Y output
-		case (counter[3:0])
-			0: BNC_y <= 7'd126;
-			1: BNC_y <= 7'd117;
-			2: BNC_y <= 7'd99;
-			3: BNC_y <= 7'd77;
-			4: BNC_y <= 7'd52;
-			5: BNC_y <= 7'd29;
-			6: BNC_y <= 7'd11;
-			7: BNC_y <= 7'd1;
-			8: BNC_y <= 7'd1;
-			9: BNC_y <= 7'd10;
-			10: BNC_y <= 7'd27;
-			11: BNC_y <= 7'd50;
-			12: BNC_y <= 7'd75;
-			13: BNC_y <= 7'd98;
-			14: BNC_y <= 7'd116;
-			15: BNC_y <= 7'd125;
+		case (counter[4:0])
+			0: BNC_y <= 7'd120;
+			1: BNC_y <= 7'd113;
+			2: BNC_y <= 7'd104;
+			3: BNC_y <= 7'd94;
+			4: BNC_y <= 7'd83;
+			5: BNC_y <= 7'd71;
+			6: BNC_y <= 7'd58;
+			7: BNC_y <= 7'd46;
+			8: BNC_y <= 7'd34;
+			9: BNC_y <= 7'd24;
+			10: BNC_y <= 7'd15;
+			11: BNC_y <= 7'd7;
+			12: BNC_y <= 7'd3;
+			13: BNC_y <= 7'd0;
+			14: BNC_y <= 7'd0;
+			15: BNC_y <= 7'd2;
+			16: BNC_y <= 7'd7;
+			17: BNC_y <= 7'd13;
+			18: BNC_y <= 7'd22;
+			19: BNC_y <= 7'd33;
+			20: BNC_y <= 7'd44;
+			21: BNC_y <= 7'd56;
+			22: BNC_y <= 7'd69;
+			23: BNC_y <= 7'd81;
+			24: BNC_y <= 7'd93;
+			25: BNC_y <= 7'd103;
+			26: BNC_y <= 7'd112;
+			27: BNC_y <= 7'd119;
+			28: BNC_y <= 7'd124;
+			29: BNC_y <= 7'd126;
+			30: BNC_y <= 7'd126;
+			31: BNC_y <= 7'd124;
 			default: BNC_y <= 7'd0;
-		endcase
+		endcase // counter[4:0]
 	end
 
 	assign BNC_trig = counter[5];
