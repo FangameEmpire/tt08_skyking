@@ -35,8 +35,8 @@ module tt_um_NicklausThompson_SkyKing (
 	wire [7:0] VGA_out, BNC1_out, BNC2Y_out, BNC2X_out;
 	assign VGA_out = {hsync, B[0], G[0], R[0], vsync, B[1], G[1], R[1]};
 	assign BNC1_out = {BNC_x[0], BNC_x[2], BNC_y[0], BNC_y[2], BNC_x[1], BNC_x[3], BNC_y[1], BNC_trig};
-	assign BNC2Y_out = {8'hFF};
-	assign BNC2X_out = {8'hFF};
+	assign BNC2Y_out = {BNC_trig, BNC_y[5], BNC_y[3], BNC_y[1], BNC_y[6], BNC_y[4], BNC_y[2], BNC_y[0]};
+	assign BNC2X_out = {BNC_x[7], BNC_x[5], BNC_x[3], BNC_x[1], BNC_x[6], BNC_x[4], BNC_x[2], BNC_x[0]};
 	assign uio_oe  = 8'hFF;
 
 	// 2'b00: VGA
