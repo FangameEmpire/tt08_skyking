@@ -92,79 +92,115 @@ module bnc_demo(
 			BNC_y <= 7'd0;
 		end
 		
-		case (counter[4:0])
-			0: BNC_x <= 8'd186;
-			1: BNC_x <= 8'd207;
-			2: BNC_x <= 8'd225;
-			3: BNC_x <= 8'd239;
-			4: BNC_x <= 8'd249;
-			5: BNC_x <= 8'd254;
-			6: BNC_x <= 8'd254;
-			7: BNC_x <= 8'd249;
-			8: BNC_x <= 8'd240;
-			9: BNC_x <= 8'd226;
-			10: BNC_x <= 8'd209;
-			11: BNC_x <= 8'd188;
-			12: BNC_x <= 8'd165;
-			13: BNC_x <= 8'd140;
-			14: BNC_x <= 8'd115;
-			15: BNC_x <= 8'd91;
-			16: BNC_x <= 8'd68;
-			17: BNC_x <= 8'd47;
-			18: BNC_x <= 8'd29;
-			19: BNC_x <= 8'd15;
-			20: BNC_x <= 8'd5;
-			21: BNC_x <= 8'd0;
-			22: BNC_x <= 8'd0;
-			23: BNC_x <= 8'd5;
-			24: BNC_x <= 8'd14;
-			25: BNC_x <= 8'd28;
-			26: BNC_x <= 8'd46;
-			27: BNC_x <= 8'd67;
-			28: BNC_x <= 8'd90;
-			29: BNC_x <= 8'd114;
-			30: BNC_x <= 8'd139;
-			31: BNC_x <= 8'd164;
-			default: BNC_x <= 8'd0;
-		endcase // counter[4:0]
-		
-		// 7-bit Y output
-		case (counter[4:0])
-			0: BNC_y <= 7'd120;
-			1: BNC_y <= 7'd113;
-			2: BNC_y <= 7'd104;
-			3: BNC_y <= 7'd94;
-			4: BNC_y <= 7'd83;
-			5: BNC_y <= 7'd71;
-			6: BNC_y <= 7'd58;
-			7: BNC_y <= 7'd46;
-			8: BNC_y <= 7'd34;
-			9: BNC_y <= 7'd24;
-			10: BNC_y <= 7'd15;
-			11: BNC_y <= 7'd7;
-			12: BNC_y <= 7'd3;
-			13: BNC_y <= 7'd0;
-			14: BNC_y <= 7'd0;
-			15: BNC_y <= 7'd2;
-			16: BNC_y <= 7'd7;
-			17: BNC_y <= 7'd13;
-			18: BNC_y <= 7'd22;
-			19: BNC_y <= 7'd33;
-			20: BNC_y <= 7'd44;
-			21: BNC_y <= 7'd56;
-			22: BNC_y <= 7'd69;
-			23: BNC_y <= 7'd81;
-			24: BNC_y <= 7'd93;
-			25: BNC_y <= 7'd103;
-			26: BNC_y <= 7'd112;
-			27: BNC_y <= 7'd119;
-			28: BNC_y <= 7'd124;
-			29: BNC_y <= 7'd126;
-			30: BNC_y <= 7'd126;
-			31: BNC_y <= 7'd124;
-			default: BNC_y <= 7'd0;
-		endcase // counter[4:0]
-end
+		case (counter[13:10])
+			4'h0: begin
+				case (counter[4:0])
+					0: BNC_x <= 8'd186;
+					1: BNC_x <= 8'd207;
+					2: BNC_x <= 8'd225;
+					3: BNC_x <= 8'd239;
+					4: BNC_x <= 8'd249;
+					5: BNC_x <= 8'd254;
+					6: BNC_x <= 8'd254;
+					7: BNC_x <= 8'd249;
+					8: BNC_x <= 8'd240;
+					9: BNC_x <= 8'd226;
+					10: BNC_x <= 8'd209;
+					11: BNC_x <= 8'd188;
+					12: BNC_x <= 8'd165;
+					13: BNC_x <= 8'd140;
+					14: BNC_x <= 8'd115;
+					15: BNC_x <= 8'd91;
+					16: BNC_x <= 8'd68;
+					17: BNC_x <= 8'd47;
+					18: BNC_x <= 8'd29;
+					19: BNC_x <= 8'd15;
+					20: BNC_x <= 8'd5;
+					21: BNC_x <= 8'd0;
+					22: BNC_x <= 8'd0;
+					23: BNC_x <= 8'd5;
+					24: BNC_x <= 8'd14;
+					25: BNC_x <= 8'd28;
+					26: BNC_x <= 8'd46;
+					27: BNC_x <= 8'd67;
+					28: BNC_x <= 8'd90;
+					29: BNC_x <= 8'd114;
+					30: BNC_x <= 8'd139;
+					31: BNC_x <= 8'd164;
+					default: BNC_x <= 8'd0;
+				endcase // counter[4:0]
+				
+				// 7-bit Y output
+				case (counter[4:0])
+					0: BNC_y <= 7'd120;
+					1: BNC_y <= 7'd113;
+					2: BNC_y <= 7'd104;
+					3: BNC_y <= 7'd94;
+					4: BNC_y <= 7'd83;
+					5: BNC_y <= 7'd71;
+					6: BNC_y <= 7'd58;
+					7: BNC_y <= 7'd46;
+					8: BNC_y <= 7'd34;
+					9: BNC_y <= 7'd24;
+					10: BNC_y <= 7'd15;
+					11: BNC_y <= 7'd7;
+					12: BNC_y <= 7'd3;
+					13: BNC_y <= 7'd0;
+					14: BNC_y <= 7'd0;
+					15: BNC_y <= 7'd2;
+					16: BNC_y <= 7'd7;
+					17: BNC_y <= 7'd13;
+					18: BNC_y <= 7'd22;
+					19: BNC_y <= 7'd33;
+					20: BNC_y <= 7'd44;
+					21: BNC_y <= 7'd56;
+					22: BNC_y <= 7'd69;
+					23: BNC_y <= 7'd81;
+					24: BNC_y <= 7'd93;
+					25: BNC_y <= 7'd103;
+					26: BNC_y <= 7'd112;
+					27: BNC_y <= 7'd119;
+					28: BNC_y <= 7'd124;
+					29: BNC_y <= 7'd126;
+					30: BNC_y <= 7'd126;
+					31: BNC_y <= 7'd124;
+					default: BNC_y <= 7'd0;
+				endcase // counter[4:0]
+			end // 4'h0
+			4'h1: begin
+				BNC_x <= counter[7:0] & {8{((counter[7:0] > 7'd47) & (counter[7:0] < 7'd151))}};
+				BNC_y <= 7'd27;
+			end // 4'h1
+			4'h2: begin
+				BNC_x <= 8'd151;
+				BNC_y <= counter[6:0] & {7{((counter[6:0] > 7'd27) & (counter[6:0] < 7'd43))}};
+			end // 4'h2
+			4'h3: begin
+				BNC_x <= counter[7:0] & {8{((counter[7:0] > 7'd114) & (counter[7:0] < 7'd151))}};
+				BNC_y <= 7'd43;
+			end // 4'h3
+			4'h4: begin
+				BNC_x <= 8'd114;
+				BNC_y <= counter[6:0] & {7{((counter[6:0] > 7'd43) & (counter[6:0] < 7'd58))}};
+			end // 4'h4
+			4'h5: begin
+				BNC_x <= counter[7:0] & {8{((counter[7:0] > 7'd114) & (counter[7:0] < 7'd211))}};
+				BNC_y <= 7'd58;
+			end // 4'h5
+			4'h6: begin
+				BNC_x <= 8'd211;
+				BNC_y <= counter[6:0] & {7{((counter[6:0] > 7'd58) & (counter[6:0] < 7'd75))}};
+			end // 4'h6
+			4'h7: begin
+				BNC_x <= counter[7:0] & {8{((counter[7:0] > 7'd173) & (counter[7:0] < 7'd211))}};
+				BNC_y <= 7'd75;
+			end // 4'h7
+			default: begin
+				BNC_x <= BNC_x;
+				BNC_y <= BNC_y;
+			end // default
+		endcase
+	end
 
 	assign BNC_trig = counter[3];
 
@@ -221,20 +257,10 @@ module skyking_generator(
 					   | (pix_y[8:3] == 6'b111000) & (pix_x[8:5] == 4'b00011)  & ~pix_x[9]
 					   | (pix_y[8:5] == 4'b1101)   & (pix_x[8:3] == 6'b001100) & ~pix_x[9];
 	// Y
-	assign do_letter[03] = (pix_y[8:4] == 5'b11010)  & (pix_x[8:3] == 6'b010110)
-                       | (pix_y[8:4] == 5'b11010)  & (pix_x[8:3] == 6'b011001)
-                       | (pix_y[8:3] == 6'b110110)  & (pix_x[8:4] == 5'b001100)
-                       | (pix_y[8:3] == 6'b110110)  & (pix_x[8:4] == 5'b001011)
-                       | (pix_y[8:4] == 5'b11011)  & (pix_x[8:3] == 6'b010111)
-                       | (pix_y[8:4] == 5'b11011)  & (pix_x[8:3] == 6'b011000)
-                       | (pix_y[8:3] == 6'b111000)  & (pix_x[8:3] == 6'b010111)
-                       | (pix_y[8:3] == 6'b111000)  & (pix_x[8:3] == 6'b011000);
+	assign do_letter[03] = (pix_y[8:4] == 5'b11010)  & (pix_x[8:3] == 6'b010100) & ~pix_x[9]
+					   | (pix_y[8:4] == 5'b11010)  & (pix_x[8:3] == 6'b010111);
 	// O
-	assign do_letter[04] = (pix_y[8:3] == 6'b110100) & (pix_x[8:5] == 4'b0111)
-                       | (pix_y[8:3] == 6'b111000) & (pix_x[8:5] == 4'b0111)
-                       | (pix_y[8:5] == 4'b1101)   & (pix_x[8:3] == 6'b011100)
-                       | (pix_y[8:5] == 4'b1101)   & (pix_x[8:3] == 6'b100000)
-                       | (pix_y[8:3] == 6'b111000) & (pix_x[8:3] == 6'b100000);
+	assign do_letter[04] = 1'b0;
 	// U
 	assign do_letter[05] = 1'b0;
 	// S
