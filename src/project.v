@@ -34,7 +34,7 @@ module tt_um_NicklausThompson_SkyKing (
 	// PMODs
 	wire [7:0] VGA_out, BNC1_out, BNC2Y_out, BNC2X_out;
 	assign VGA_out = {hsync, B[0], G[0], R[0], vsync, B[1], G[1], R[1]};
-	assign BNC1_out = {BNC_x[0], BNC_x[2], BNC_y[0], BNC_y[2], BNC_x[1], BNC_x[3], BNC_y[1], BNC_trig};
+	assign BNC1_out = {BNC_x[4], BNC_x[6], BNC_y[4], BNC_y[6], BNC_x[5], BNC_x[7], BNC_y[5], BNC_trig};
 	assign BNC2Y_out = {BNC_trig, BNC_y[5], BNC_y[3], BNC_y[1], BNC_y[6], BNC_y[4], BNC_y[2], BNC_y[0]};
 	assign BNC2X_out = {BNC_x[7], BNC_x[5], BNC_x[3], BNC_x[1], BNC_x[6], BNC_x[4], BNC_x[2], BNC_x[0]};
 	assign uio_oe  = 8'hFF;
@@ -87,50 +87,53 @@ module bnc_demo(
 	
 	always @(posedge clk) begin
 		// 8-bit X output
-		case (counter[4:0])
-			0: BNC_x = 8'd12;
-			1: BNC_x = 8'd37;
-			2: BNC_x = 8'd61;
-			3: BNC_x = 8'd85;
-			4: BNC_x = 8'd109;
-			5: BNC_x = 8'd131;
-			6: BNC_x = 8'd152;
-			7: BNC_x = 8'd171;
-			8: BNC_x = 8'd189;
-			9: BNC_x = 8'd205;
-			10: BNC_x = 8'd219;
-			11: BNC_x = 8'd230;
-			12: BNC_x = 8'd240;
-			13: BNC_x = 8'd247;
-			14: BNC_x = 8'd252;
-			15: BNC_x = 8'd255;
-			default: BNC_x = 8'd00;
+		if (~rst_n) begin
+			BNC_x <= 8'd0;
+			BNC_y <= 7'd0;
+		end
+		
+		case (counter[3:0])
+			0: BNC_x <= 8'd150;
+			1: BNC_x <= 8'd197;
+			2: BNC_x <= 8'd232;
+			3: BNC_x <= 8'd252;
+			4: BNC_x <= 8'd252;
+			5: BNC_x <= 8'd234;
+			6: BNC_x <= 8'd199;
+			7: BNC_x <= 8'd153;
+			8: BNC_x <= 8'd103;
+			9: BNC_x <= 8'd57;
+			10: BNC_x <= 8'd21;
+			11: BNC_x <= 8'd2;
+			12: BNC_x <= 8'd2;
+			13: BNC_x <= 8'd21;
+			14: BNC_x <= 8'd56;
+			15: BNC_x <= 8'd102;
+			default: BNC_x <= 8'd0;
 		endcase
 		
 		// 7-bit Y output
-		case (counter[4:0])
-			0: BNC_y = 7'd5;
-			1: BNC_y = 7'd18;
-			2: BNC_y = 7'd30;
-			3: BNC_y = 7'd42;
-			4: BNC_y = 7'd54;
-			5: BNC_y = 7'd65;
-			6: BNC_y = 7'd75;
-			7: BNC_y = 7'd85;
-			8: BNC_y = 7'd94;
-			9: BNC_y = 7'd102;
-			10: BNC_y = 7'd109;
-			11: BNC_y = 7'd115;
-			12: BNC_y = 7'd120;
-			13: BNC_y = 7'd123;
-			14: BNC_y = 7'd126;
-			15: BNC_y = 7'd127;
-			default: BNC_x = 7'd00;
+		case (counter[3:0])
+			0: BNC_y <= 7'd126;
+			1: BNC_y <= 7'd117;
+			2: BNC_y <= 7'd99;
+			3: BNC_y <= 7'd77;
+			4: BNC_y <= 7'd52;
+			5: BNC_y <= 7'd29;
+			6: BNC_y <= 7'd11;
+			7: BNC_y <= 7'd1;
+			8: BNC_y <= 7'd1;
+			9: BNC_y <= 7'd10;
+			10: BNC_y <= 7'd27;
+			11: BNC_y <= 7'd50;
+			12: BNC_y <= 7'd75;
+			13: BNC_y <= 7'd98;
+			14: BNC_y <= 7'd116;
+			15: BNC_y <= 7'd125;
+			default: BNC_y <= 7'd0;
 		endcase
 	end
 
-	//assign BNC_x = raw_sine_rom[counter[4:0]];
-	//assign BNC_y = BNC_x[7:1];
 	assign BNC_trig = counter[5];
 
 endmodule
