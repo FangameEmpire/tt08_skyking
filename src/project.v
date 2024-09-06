@@ -60,7 +60,7 @@ module tt_um_NicklausThompson_SkyKing (
 	wire _unused_ok = &{ena, ui_in, uio_in};
 
 	// VGA image generator
-	skyking_generator vga_image_generator(clk, rst_n, hsync, vsync, video_active, pix_x, pix_y, R, G, B);
+	skyking_generator vga_image_generator(clk, rst_n, hsync, vsync, video_active, pix_x, pix_y, ui_in[3], R, G, B);
 
 	// BNC image generator
 	bnc_demo bnc_image_generator(clk, rst_n, BNC_x, BNC_y, BNC_trig);
@@ -178,6 +178,7 @@ module skyking_generator(
 	input wire video_active, 
 	input wire [9:0] pix_x, 
 	input wire [9:0] pix_y,
+	input wire alt, 
 	output wire [1:0] R, 
 	output wire [1:0] G, 
 	output wire [1:0] B 
@@ -199,8 +200,39 @@ module skyking_generator(
 	assign g_sky = ~pix_y[8:7];
 
 	// Letters
-	wire [17:0] do_letter;
-	wire display_letter = |do_letter;
+  wire [17:0] do_letter;
+  reg [17:0] character_hold;
+  
+  always @(posedge clk) begin
+    if (~rst_n) character_hold <= 18'b0;
+    else begin
+      case (counter[24:20])
+        default: character_hold <= character_hold;
+        5'h00: character_hold[00] <= 1'b1;
+        5'h01: character_hold[01] <= 1'b1;
+        5'h02: character_hold[02] <= 1'b1;
+        5'h03: character_hold[03] <= 1'b1;        
+        5'h04: character_hold[04] <= 1'b1;
+        5'h05: character_hold[05] <= 1'b1;
+        5'h06: character_hold[06] <= 1'b1;
+        5'h07: character_hold[07] <= 1'b1;
+        5'h08: character_hold[08] <= 1'b1;
+        5'h09: character_hold[09] <= 1'b1;
+        5'h0A: character_hold[10] <= 1'b1;        
+        5'h0B: character_hold[11] <= 1'b1;
+        5'h0C: character_hold[12] <= 1'b1;
+        5'h0D: character_hold[13] <= 1'b1;
+        5'h0E: character_hold[14] <= 1'b1;
+        5'h0F: character_hold[15] <= 1'b1;
+        5'h11: character_hold[16] <= 1'b1;
+        5'h12: character_hold[17] <= 1'b1;
+      endcase
+    end
+  end
+
+	wire [4:0] do_alt_letter;
+  wire display_letter = |({do_letter[17:6], (alt ? do_letter[5:1] : do_alt_letter), do_letter[0]} & character_hold);
+  
 	// S
   assign do_letter[00] = (pix_y[8:2] == 7'b1101000) & (pix_x[8:4] == 5'b00000)   & ~pix_x[9]
                        | (pix_y[8:3] == 6'b110100)  & (pix_x[8:2] == 7'b0000000) & ~pix_x[9]
@@ -314,6 +346,41 @@ module skyking_generator(
   assign do_letter[17] = ((pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b111001)
                        |  (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b111010))
                        & counter[22];
+
+	// Alt letters
+  // O
+  assign do_alt_letter[00] = (pix_y[8:2] == 7'b1101000) & (pix_x[8:3] == 6'b000100)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101000) & (pix_x[8:3] == 6'b000011)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b000100)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b000011)  & ~pix_x[9]
+                           | (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0000110) & ~pix_x[9]
+                           | (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0001001) & ~pix_x[9];
+  // L
+  assign do_alt_letter[01] = (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0010000) & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:4] == 5'b00100)& ~pix_x[9];
+  // O
+  assign do_alt_letter[02] = (pix_y[8:2] == 7'b1101000) & (pix_x[8:3] == 6'b001011)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101000) & (pix_x[8:3] == 6'b001100)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b001011)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b001100)  & ~pix_x[9]
+                           | (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0010110) & ~pix_x[9]
+                           | (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0011001) & ~pix_x[9];
+  // N
+  assign do_alt_letter[03] = (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0011100) & ~pix_x[9]
+                           | (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0011111) & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:2] == 7'b0011100) & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:2] == 7'b0011111) & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101010) & (pix_x[8:4] == 5'b00111)   & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101001) & (pix_x[8:3] == 6'b001110)   & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101011) & (pix_x[8:3] == 6'b001111)   & ~pix_x[9];
+  // G
+  assign do_alt_letter[04] = (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0100010) & ~pix_x[9]
+                           | (pix_y[8:3] == 6'b110101)  & (pix_x[8:2] == 7'b0100101) & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101000) & (pix_x[8:3] == 6'b010001)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101000) & (pix_x[8:3] == 6'b010010)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101010) & (pix_x[8:3] == 6'b010010)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b010001)  & ~pix_x[9]
+                           | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b010010)  & ~pix_x[9];
 
 	// VGA color channels
 	assign R = video_active ? r_sky | {2{display_letter}} : 2'b00;
