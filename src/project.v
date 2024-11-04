@@ -206,26 +206,26 @@ module skyking_generator(
   always @(posedge clk) begin
     if (~rst_n) character_hold <= 18'b0;
     else begin
-      case (counter[24:20])
+      case (counter[27:20])
         default: character_hold <= character_hold;
-        5'h00: character_hold[00] <= 1'b1;
-        5'h01: character_hold[01] <= 1'b1;
-        5'h02: character_hold[02] <= 1'b1;
-        5'h03: character_hold[03] <= 1'b1;        
-        5'h04: character_hold[04] <= 1'b1;
-        5'h05: character_hold[05] <= 1'b1;
-        5'h06: character_hold[06] <= 1'b1;
-        5'h07: character_hold[07] <= 1'b1;
-        5'h08: character_hold[08] <= 1'b1;
-        5'h09: character_hold[09] <= 1'b1;
-        5'h0A: character_hold[10] <= 1'b1;        
-        5'h0B: character_hold[11] <= 1'b1;
-        5'h0C: character_hold[12] <= 1'b1;
-        5'h0D: character_hold[13] <= 1'b1;
-        5'h0E: character_hold[14] <= 1'b1;
-        5'h0F: character_hold[15] <= 1'b1;
-        5'h11: character_hold[16] <= 1'b1;
-        5'h12: character_hold[17] <= 1'b1;
+        8'h60: character_hold[00] <= 1'b1;
+        8'h64: character_hold[01] <= 1'b1;
+        8'h68: character_hold[02] <= 1'b1;
+        8'h6C: character_hold[03] <= 1'b1;        
+        8'h70: character_hold[04] <= 1'b1;
+        8'h74: character_hold[05] <= 1'b1;
+        8'h78: character_hold[06] <= 1'b1;
+        8'h7C: character_hold[07] <= 1'b1;
+        8'h80: character_hold[08] <= 1'b1;
+        8'h84: character_hold[09] <= 1'b1;
+        8'h88: character_hold[10] <= 1'b1;        
+        8'h8C: character_hold[11] <= 1'b1;
+        8'h90: character_hold[12] <= 1'b1;
+        8'h94: character_hold[13] <= 1'b1;
+        8'h98: character_hold[14] <= 1'b1;
+        8'h9C: character_hold[15] <= 1'b1;
+        8'hA0: character_hold[16] <= 1'b1;
+        8'hA4: character_hold[17] <= 1'b1;
       endcase
     end
   end
@@ -273,11 +273,11 @@ module skyking_generator(
                        | (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0100010);
   // S
   assign do_letter[06] = (pix_y[8:2] == 7'b1101000) & (pix_x[8:4] == 5'b01011)
-                      | (pix_y[8:3] == 6'b110100)  & (pix_x[8:2] == 7'b0101100)
-                      | (pix_y[8:2] == 7'b1101010) & (pix_x[8:4] == 5'b01011)
-                      | (pix_y[8:3] == 6'b110101)  & (pix_x[8:2] == 7'b0101111)
-                      | (pix_y[8:2] == 7'b1101100) & (pix_x[8:4] == 5'b01011);
-	// P
+					   | (pix_y[8:3] == 6'b110100)  & (pix_x[8:2] == 7'b0101100)
+					   | (pix_y[8:2] == 7'b1101010) & (pix_x[8:4] == 5'b01011)
+					   | (pix_y[8:3] == 6'b110101)  & (pix_x[8:2] == 7'b0101111)
+					   | (pix_y[8:2] == 7'b1101100) & (pix_x[8:4] == 5'b01011);
+  // P
   assign do_letter[07] = (pix_y[8:4] == 5'b11010)   & (pix_x[8:2] == 7'b0110010)
                        | (pix_y[8:2] == 7'b1101100) & (pix_x[8:2] == 7'b0110010)
                        | (pix_y[8:3] == 6'b110100)  & (pix_x[8:2] == 7'b0110101)
@@ -343,9 +343,11 @@ module skyking_generator(
                        | (pix_y[8:2] == 7'b1101100) & (pix_x[8:2] == 7'b1101101)
                        | (pix_y[8:2] == 7'b1101100) & (pix_x[8:2] == 7'b1101110);
   // Cursor
-  assign do_letter[17] = ((pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b111001)
-                       |  (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b111010))
-                       & counter[22];
+  assign do_letter[17] = (character_hold[17]  ? 
+						  (((pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b111001)
+						  | (pix_y[8:2] == 7'b1101100) & (pix_x[8:3] == 6'b111010))) :
+						  (((pix_y[8:2] == 7'b1101100) & (pix_x[8:4] == 4'b00000) & ~pix_x[9])))
+						  & counter[22];
 
 	// Alt letters
   // O
